@@ -43,7 +43,7 @@ void rev(char *s)
  *
  * Return: void
  */
-void d_parser_h(int num, int pv, char *buf)
+void d_parser_h(int num, int pv, char *buf, bool is_signed)
 {
 	int digit;
 
@@ -51,8 +51,16 @@ void d_parser_h(int num, int pv, char *buf)
 		return;
 
 	digit = num / pv;
+
+	if (is_signed)
+		digit = -digit;
+
 	*buf = 48 + digit;
-	d_parser_h(num - (digit * pv), pv / 10, (buf + 1));
+
+	if (is_signed)
+		digit = -digit;
+
+	d_parser_h(num - (digit * pv), pv / 10, (buf + 1), is_signed);
 }
 
 /**
@@ -64,7 +72,7 @@ void d_parser_h(int num, int pv, char *buf)
  *
  * Return: void
  */
-void base_convert_h(int num, char *s, int base, bool isUpper)
+void base_convert_h(unsigned int num, char *s, int base, bool isUpper)
 {
 	int rem;
 	char base16[] = {'A', 'B', 'C', 'D', 'E', 'F'};

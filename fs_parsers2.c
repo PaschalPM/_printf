@@ -9,9 +9,9 @@
 char *X_parser(va_list args)
 {
 	char *s;
-	int num;
+	unsigned int num;
 
-	num = va_arg(args, int);
+	num = va_arg(args, unsigned int);
 	s = malloc(sizeof(char) * 33);
 
 	if (s == NULL)
@@ -32,9 +32,9 @@ char *X_parser(va_list args)
 char *o_parser(va_list args)
 {
 	char *s;
-	int num;
+	unsigned int num;
 
-	num = va_arg(args, int);
+	num = va_arg(args, unsigned int);
 	s = malloc(sizeof(char) * 33);
 
 	if (s == NULL)
@@ -84,4 +84,35 @@ char *ROT3_parser(va_list args)
 	}
 
 	return (str_copy);
+}
+
+
+/**
+ * u_parser - parses unsigned int format specifier
+ * @args: va_list
+ *
+ * Return: char *
+ */
+char *u_parser(va_list args)
+{
+	char *buf;
+	unsigned int num, num_cpy;
+	int place_value = 1;
+	int bytes = 0;
+
+	num = va_arg(args, int);
+	num_cpy = num;
+
+	while (num_cpy > 10)
+	{
+		num_cpy /= 10;
+		place_value *= 10;
+		bytes++;
+	}
+	buf = malloc(sizeof(char) * (bytes + 1));
+	if (!buf)
+		return (NULL);
+	u_parser_h(num, place_value, buf);
+
+	return (buf);
 }

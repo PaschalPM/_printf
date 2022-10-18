@@ -9,7 +9,7 @@
 bool fs_register(char sp)
 {
 	char format_specifiers[] = {
-		'c', 's', 'd', 'b', 'i', 'x', 'X', 'o', 'r', 'R', '\0'
+		'c', 's', 'd', 'b', 'i', 'x', 'X', 'o', 'R', 'u', '\0'
 	};
 	int i;
 
@@ -63,13 +63,19 @@ void fs_buf_switcher(char sp, int j, FS *fs_buf)
 			fs_buf[j].type = 'o';
 			fs_buf[j].parser = o_parser;
 			break;
-		case 'r':
-			fs_buf[j].type = 'r';
-			fs_buf[j].parser = r_parser;
-			break;
+		/**
+		 * case 'r':
+		 * fs_buf[j].type = 'r';
+		 * fs_buf[j].parser = r_parser;
+		 * break;
+		 */
 		case 'R':
 			fs_buf[j].type = 'R';
 			fs_buf[j].parser = ROT3_parser;
+			break;
+		case 'u':
+			fs_buf[j].type = 'u';
+			fs_buf[j].parser = u_parser;
 			break;
 	}
 }

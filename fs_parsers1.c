@@ -46,36 +46,40 @@ char *d_parser(va_list args)
 	bool is_signed = false;
 
 	num = va_arg(args, int);
-	num_cpy = num;
-
-	while (num_cpy)
-	{
-		num_cpy /= 10;
-		place_value *= 10;
-		bytes++;
-	}
-	place_value /= 10;
-
 	if (num < 0)
 	{
 		bytes++;
 		is_signed = true;
 	}
-
+	num_cpy = num;
+	if (!is_signed)
+	{
+		while (num_cpy > 10)
+		{
+			num_cpy /= 10;
+			place_value *= 10;
+			bytes++;
+		}
+	}
+	else
+	{
+		while (num_cpy < -10)
+		{
+			num_cpy /= 10;
+			place_value *= 10;
+			bytes++;
+		}
+	}
 	buf = malloc(sizeof(char) * (bytes + 1));
-
 	if (!buf)
 		return (NULL);
-
 	if (is_signed)
 	{
 		*(buf) = '-';
-		num = -num;
-		d_parser_h(num, place_value, (buf + 1));
+		d_parser_h(num, place_value, (buf + 1), is_signed);
 	}
 	else
-		d_parser_h(num, place_value, buf);
-
+		d_parser_h(num, place_value, buf, is_signed);
 	return (buf);
 }
 
@@ -88,9 +92,9 @@ char *d_parser(va_list args)
 char *b_parser(va_list args)
 {
 	char *s;
-	int num;
+	unsigned int num;
 
-	num = va_arg(args, int);
+	num = va_arg(args, unsigned int);
 	s = malloc(sizeof(char) * 33);
 
 	if (s == NULL)
@@ -111,9 +115,9 @@ char *b_parser(va_list args)
 char *x_parser(va_list args)
 {
 	char *s;
-	int num;
+	unsigned int num;
 
-	num = va_arg(args, int);
+	num = va_arg(args, unsigned int);
 	s = malloc(sizeof(char) * 33);
 
 	if (s == NULL)

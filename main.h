@@ -26,9 +26,10 @@ struct fmt_spec
 /* UTILS & HELPER FUNCTIONS */
 unsigned int _strlen(char *);
 void rev(char *);
-void d_parser_h(int, int, char *);
-void base_convert_h(int, char *, int, bool);
+void d_parser_h(int, int, char *, bool);
+void base_convert_h(unsigned int, char *, int, bool);
 char *parse_string_h(va_list, bool);
+void u_parser_h(unsigned int, unsigned int, char *);
 
 /* PARSERS */
 char *c_parser(va_list);
@@ -40,6 +41,7 @@ char *X_parser(va_list);
 char *o_parser(va_list);
 char *r_parser(va_list);
 char *ROT3_parser(va_list);
+char *u_parser(va_list);
 
 /* DYNAMIC FS BUFFER FUNCTIONS */
 bool fs_register(char);
