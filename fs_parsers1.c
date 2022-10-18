@@ -52,24 +52,14 @@ char *d_parser(va_list args)
 		is_signed = true;
 	}
 	num_cpy = num;
-	if (!is_signed)
+
+	while (d_parser_com_h(num_cpy, is_signed))
 	{
-		while (num_cpy > 10)
-		{
-			num_cpy /= 10;
-			place_value *= 10;
-			bytes++;
-		}
+		num_cpy /= 10;
+		place_value *= 10;
+		bytes++;
 	}
-	else
-	{
-		while (num_cpy < -10)
-		{
-			num_cpy /= 10;
-			place_value *= 10;
-			bytes++;
-		}
-	}
+
 	buf = malloc(sizeof(char) * (bytes + 1));
 	if (!buf)
 		return (NULL);

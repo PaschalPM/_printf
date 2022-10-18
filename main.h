@@ -30,6 +30,7 @@ void d_parser_h(int, int, char *, bool);
 void base_convert_h(unsigned int, char *, int, bool);
 char *parse_string_h(va_list, bool);
 void u_parser_h(unsigned int, unsigned int, char *);
+bool d_parser_com_h(int, bool);
 
 /* PARSERS */
 char *c_parser(va_list);
