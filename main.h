@@ -49,7 +49,7 @@ void fs_buf_switcher(char, int, FS *);
 FS *gen_fs_buf(char *, int);
 bool check_fmt_spec(char *, bool *, int *);
 int num_of_vars(char *);
-char *str_parser(char *, va_list, int *);
+void str_parser(char *, char *, va_list, int *);
 int _printf(char *, ...);
 
 #endif /* MAIN_H */

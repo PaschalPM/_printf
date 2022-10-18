@@ -44,18 +44,15 @@ FS *gen_fs_buf(char *s, int n)
  *
  * Return: char *
  */
-char *str_parser(char *format, va_list args, int *j)
+void str_parser(char *format, char *out_str, va_list args, int *j)
 {
 	FS *fs_buf;
-	char *va_arg_str, *out_str;
+	char *va_arg_str;
 	int i = 0, k = 0, l = 0; /* cntrs for format input char, va_arg & its char*/
 	bool is_percent_fs = false; /* checks if format specifier is a % */
 
-	out_str = malloc(sizeof(char));
 	fs_buf = gen_fs_buf(format, num_of_vars(format));
 
-	if (!out_str)
-		return (NULL);
 	for (; format[i]; i++)
 	{
 		if (check_fmt_spec((format + i), &is_percent_fs, &i))
@@ -85,7 +82,7 @@ char *str_parser(char *format, va_list args, int *j)
 		}
 	}
 	out_str[*j] = '\0';
-	return (out_str);
+	free(fs_buf);
 }
 
 /**
@@ -98,13 +95,12 @@ int _printf(char *format, ...)
 {
 	va_list args;
 	int j = 0; /* output string (out_str) character counter */
-	char *formated_str;
+	char formated_str[1024];
 
 	va_start(args, format);
-	formated_str = str_parser(format, args, &j);
+	str_parser(format, formated_str, args, &j);
 	write(1, formated_str, j);
 	va_end(args);
-	free(formated_str);
 
 	return (j);
 }
