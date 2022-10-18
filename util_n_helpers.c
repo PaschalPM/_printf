@@ -105,7 +105,6 @@ void base_convert_h(int num, char *s, int base, bool isUpper)
  */
 char *parse_string_h(va_list args, bool reverse)
 {
-	int len;
 	char *str_copy;
 	char *str_copy2;
 	int i;
